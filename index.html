@@ -14,14 +14,11 @@
 <!-- Fondo dinámico -->
 <div class="particles" id="particles"></div>
 
-<!-- Música (activación manual por políticas del navegador) -->
-<iframe
-  id="music"
-  width="0"
-  height="0"
-  allow="autoplay; encrypted-media"
-  src="">
-</iframe>
+<!-- AUDIO LOCAL -->
+<audio id="audio" loop preload="metadata">
+  <source src="Alabanza.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
 
 <div class="music-control" id="musicBtn">▶ Activar música</div>
 
@@ -57,7 +54,7 @@
   <!-- FOTO 2 -->
   <section>
     <div class="fade">
-      <img src="foto2.jpg" class="photo" alt="Memoria viva">
+      <img src="img2.jpg" class="photo" alt="Memoria viva">
     </div>
   </section>
 
@@ -75,8 +72,7 @@
         </a>
 
         <a class="pulse"
-           href="https://maps.google.com/?q=Panteón+Municipal+Nanacamilpa+Tlaxcala"
-           target="_blank"
+           href="https://maps.google.com/?q=Panteón+Municipal+Nanacamilpa+Tlaxc           target="_blank"
            rel="noopener noreferrer">
           🌿 Visita al panteón
         </a>
@@ -107,6 +103,26 @@
 
 <!-- JS externo -->
 <script src="script.js"></script>
+
+<!-- CONTROL DE AUDIO -->
+<script>
+  const audio = document.getElementById('audio');
+  const musicBtn = document.getElementById('musicBtn');
+  let isPlaying = false;
+
+  musicBtn.addEventListener('click', () => {
+    if (!isPlaying) {
+      audio.volume = 0.5;
+      audio.play();
+      musicBtn.textContent = '⏸ Pausar música';
+      isPlaying = true;
+    } else {
+      audio.pause();
+      musicBtn.textContent = '▶ Activar música';
+      isPlaying = false;
+    }
+  });
+</script>
 
 </body>
 </html>
