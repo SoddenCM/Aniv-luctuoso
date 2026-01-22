@@ -20,19 +20,45 @@ for(let i=0;i<70;i++){
   wrap.appendChild(p);
 }
 
-// Música (YouTube con interacción real)
-let playing=false;
-const btn=document.getElementById('musicBtn');
-const iframe=document.getElementById('music');
+/* ============================
+   CONTROL DE AUDIO LOCAL
+   Compatible con GitHub Pages
+   ============================ */
 
-btn.onclick=()=>{
-  if(!playing){
-    iframe.src="https://www.youtube.com/embed/uBibOsN3hpQ?autoplay=1&mute=0&controls=0";
-    btn.textContent="⏸ Silenciar música";
-    playing=true;
-  }else{
-    iframe.src="";
-    btn.textContent="▶ Activar música";
-    playing=false;
+const audio = document.getElementById('audio');
+const musicBtn = document.getElementById('musicBtn');
+
+let isPlaying = false;
+
+/* 
+  DESBLOQUEO DE AUDIO
+  Necesario para móviles y navegadores internos
+*/
+function unlockAudio() {
+  audio.play()
+    .then(() => {
+      audio.pause();
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    })
+    .catch(() => {});
+}
+
+document.addEventListener('click', unlockAudio);
+document.addEventListener('touchstart', unlockAudio);
+
+/*
+  CONTROL MANUAL DE REPRODUCCIÓN
+*/
+musicBtn.addEventListener('click', () => {
+  if (!isPlaying) {
+    audio.volume = 0.5; // volumen respetuoso
+    audio.play();
+    musicBtn.textContent = '⏸ Pausar música';
+    isPlaying = true;
+  } else {
+    audio.pause();
+    musicBtn.textContent = '▶ Activar música';
+    isPlaying = false;
   }
-};
+});
